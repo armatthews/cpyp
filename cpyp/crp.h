@@ -294,6 +294,10 @@ class crp {
         assert(std::isfinite(lp));
         for (auto& dish_loc : dish_locs_)
           for (auto& bin : dish_loc.second.h[0])
+            // bin.first is a number of customers
+            // bin.second is the number of tables eating the dish that have that number of customers
+            // For example, if bin.first = 1 and bin.second = 3,
+            // then  there are 3 tables, each of which with 1 customer, all serving this dish.
             lp += lgamma(bin.first) * bin.second;
       } else { // should never happen
         assert(!"discount less than 0 detected!");
