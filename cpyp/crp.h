@@ -263,14 +263,14 @@ class crp {
       if (discount > 0.0) {  // two parameter case: discount > 0
         const double r = lgamma(1.0 - discount);
         if (strength) {
-          lp += lgamma(strength)
+          lp += lgamma(strength);
           lp += -lgamma(strength / discount);
-          lp += num_tables_ * log(discount)
+          lp += num_tables_ * log(discount);
         }
         else {
-          lp += (num_tables_ - 1) * log(discount)
+          lp += (num_tables_ - 1) * log(discount);
         }
-        lp += -lgamma(strength + num_customers_)
+        lp += -lgamma(strength + num_customers_);
         lp += lgamma(strength / discount + num_tables_);
         // above line implies
         // 1) when adding a customer to a restaurant containing N customers:
