@@ -228,8 +228,8 @@ class crp {
   }
 
   double log_likelihood() const {
-    return llh_;
-//    return log_likelihood(discount_, strength_);
+    //return llh_;
+    return log_likelihood(discount_, strength_);
   }
 
   // call this before changing the number of tables / customers
