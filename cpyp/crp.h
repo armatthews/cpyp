@@ -262,10 +262,16 @@ class crp {
     if (num_customers_) {  // if restaurant is not empty
       if (discount > 0.0) {  // two parameter case: discount > 0
         const double r = lgamma(1.0 - discount);
-        if (strength)
-          lp += lgamma(strength) - lgamma(strength / discount);
-        lp += - lgamma(strength + num_customers_)
-             + num_tables_ * log(discount) + lgamma(strength / discount + num_tables_);
+        if (strength) {
+          lp += lgamma(strength)
+          lp += -lgamma(strength / discount);
+          lp += num_tables_ * log(discount)
+        }
+        else {
+          lp += (num_tables_ - 1) * log(discount)
+        }
+        lp += -lgamma(strength + num_customers_)
+        lp += lgamma(strength / discount + num_tables_);
         // above line implies
         // 1) when adding a customer to a restaurant containing N customers:
         //    lp -= log(strength + N)    [because \Gamma(s+N+1) = (s+N)\Gamma(s+N)
@@ -279,7 +285,7 @@ class crp {
         assert(std::isfinite(lp));
         for (auto& dish_loc : dish_locs_)
           for (auto& bin : dish_loc.second.h[0])
-            lp += (lgamma(bin.first - discount) - r) * bin.second;
+            lp += (lgamma(bin.first - discount) - lgamma(r)) * bin.second;
          // above implies
          // 1) when adding to a table seating N > 1 customers
          //    lp += log(N - discount)
